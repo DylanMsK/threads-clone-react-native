@@ -10,6 +10,8 @@ import { Ionicons } from "@expo/vector-icons";
 import { useOAuth } from "@clerk/clerk-expo";
 import { Colors } from "@/constants/Colors";
 import React from "react";
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
 
 export default function Index() {
   const { startOAuthFlow: startFacebookOAuthFlow } = useOAuth({
@@ -18,7 +20,8 @@ export default function Index() {
   const { startOAuthFlow: startGoogleOAuthFlow } = useOAuth({
     strategy: "oauth_google",
   });
-
+  const data = useQuery(api.users.getAllUsers);
+  console.log("🚀 ~ file: index.tsx:10 ~ Index ~ data:", data);
   const handleFacebookLogin = async () => {
     try {
       const { createdSessionId, setActive } = await startFacebookOAuthFlow();
